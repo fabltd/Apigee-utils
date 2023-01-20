@@ -12,8 +12,8 @@ gwIP=$(gcloud compute instances describe gateway --format='get(networkInterfaces
 echo -e "Gateway IP:" $gwIP
 
 #Add IP to Config files
-sed -i 's#http://*.*.*.*;#http://'$apiIP';#g' proxy-basic.conf
-sed -i 's#http://*.*.*.*;#http://'$apiIP';#g' ../../config/reverse-proxy.conf
+sed -i 's#http://*.*.*.*;#http://'$apiIP';#g' ./config/proxy-basic.conf
+sed -i 's#http://*.*.*.*;#http://'$apiIP';#g' ~/Apigee-utils/student-scripts/config/reverse-proxy.conf
 
 echo -e "\n"
 
@@ -26,7 +26,7 @@ echo -e "\n"
 
 echo -e "Add NGIX config"
 # Add basic config
-gcloud compute scp ./proxy-basic.conf gateway:/tmp/reverse-proxy.conf
+gcloud compute scp ./config/proxy-basic.conf gateway:/tmp/reverse-proxy.conf
 gcloud compute ssh gateway --command "sudo cp -rlf /tmp/reverse-proxy.conf /etc/nginx/sites-enabled/reverse-proxy.conf"
 echo -e "\n"
 

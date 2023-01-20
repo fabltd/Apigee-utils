@@ -2,13 +2,23 @@
 
 echo -e "Setting compute engine zone"
 # Set zone of gateway VM
-gcloud config set compute/zone us-east1-b
+export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
+gcloud config set compute/zone $COMPUTE_ZONE
 echo -e "\n"
 
 #---------------------------------------#
+#Check if mTLS Scripts exist
+if [ -d "~/Apigee-utils/mTLS" ] 
+then
+    echo "Well done mTLS scripts present" 
+else
+    echo -e "mTLS Scripts missing - creating"
+    ./certs.sh
+fi
+#---------------------------------------#
 echo -e "Copying Certs to gateway"
 # Set Path for Certs
-cd ~/Apigee-X/mTLS
+cd ~/Apigee-utils/mTLS
 # Copy Certs to temp on server
 gcloud compute scp ./server/server.crt ./server/server.key ./ca/ca.crt gateway:/tmp/
 echo -e "\n"
@@ -16,9 +26,9 @@ echo -e "\n"
 #---------------------------------------#
 echo -e "Copying NGINX config to gateway"
 # Set Path for Configs
-cd ~/Apigee-X/config
+cd ~/Apigee-utils/student-scripts
 # Copy Config to temp on server
-gcloud compute scp ./reverse-proxy.conf gateway:/tmp/
+gcloud compute scp ./config/reverse-proxy.conf gateway:/tmp/
 echo -e "\n"
 
 #---------------------------------------#
