@@ -6,9 +6,11 @@ export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
 gcloud config set compute/zone $COMPUTE_ZONE
 echo -e "\n"
 
+cd ~/Apigee-utils/student-scripts
+
 #---------------------------------------#
 #Check if mTLS Scripts exist
-if [ -d "~/Apigee-utils/mTLS" ] 
+if [ -d "../mTLS" ] 
 then
     echo "Well done mTLS scripts present" 
 else

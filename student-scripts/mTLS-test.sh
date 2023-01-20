@@ -8,7 +8,7 @@ gcloud config set compute/zone $COMPUTE_ZONE
 
 # Add HTTPS firewall rule
 echo -e "Enabling HTTPS firewall rule"
-gcloud compute firewall-rules create script-https --allow=tcp:443 --description="Allow HTTPS - 443" --direction=INGRESS
+gcloud compute firewall-rules create script-https --allow=tcp:443 --description="Allow HTTPS - 443" --direction=INGRESS --network="mhc-network"
 
 IP=$(gcloud compute instances describe gateway --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
 
