@@ -1,6 +1,7 @@
 echo -e "Installing NGIX Gateway"
 # Set zone of legacy VM
-gcloud config set compute/zone us-east1-b
+export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
+gcloud config set compute/zone $COMPUTE_ZONE
 
 # Get legacy IP Address
 apiIP=$(gcloud compute instances describe legacy-api --format='get(networkInterfaces[0].networkIP)')
@@ -12,14 +13,14 @@ echo -e "Gateway IP:" $gwIP
 
 #Add IP to Config files
 sed -i 's#http://*.*.*.*;#http://'$apiIP';#g' proxy-basic.conf
-sed -i 's#http://*.*.*.*;#http://'$apiIP';#g' ../config/reverse-proxy.conf
+sed -i 's#http://*.*.*.*;#http://'$apiIP';#g' ../../config/reverse-proxy.conf
 
 echo -e "\n"
 
 echo -e "Install packages"
 # Install NGINX
-gcloud compute ssh gateway --command "sudo apt-get update -y"
-gcloud compute ssh gateway --command "sudo apt-get install nginx"
+gcloud compute ssh gateway --command "yes Y | sudo apt-get update"
+gcloud compute ssh gateway --command "yes Y | sudo apt-get install nginx"
 gcloud compute ssh gateway --command "sudo unlink /etc/nginx/sites-enabled/default"
 echo -e "\n"
 
