@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+  <title>Hacking is wrong, wrong I tell you...</title>
+</head>
+
+<body>
+  <form action="/">
+    <div class="banner">
+      <h1>Hacking Form</h1>
+    </div>
+    <h2>Method</h2>
+    <div>
+      <select name="method" id="method">
+        <option value="get">get</option>
+        <option value="post">post</option>
+        <option value="put">put</option>
+        <option value="patch">patch</option>
+        <option value="delete">delete</option>
+      </select>
+    </div>
+    <h2>Endpoint address</h2>
+    <div class="item">
+      <div class="name-item">
+        <input type="text" name="address" size="80" id="address" value="http://localhost:8080/v1/customers?email=acelle1t@boston.com"
+          placeholder="http..." />
+      </div>
+    </div>
+    <h2>JSON payload (optional)</h2>
+    <div class="item">
+      <textarea cols="70" rows="10" name="json" id="json"></textarea>
+    </div>
+
+    <div class="btn-block">
+      <button type="button" onclick="send()">Send</button>
+    </div>
+    <div>
+      <br>
+      <div id="results"></div>
+    </div>
+  </form>
+  <script>
+    function send() {
+      const address = $('#address').val();
+      const results = $('#results');
+      const method = $('#method').val();
+      switch (method) {
+        case 'get':
+          $.getJSON(address, (data) => {
+            results.html('<pre>' + JSON.stringify(data, undefined, 2) + '</pre>');
+          });
+          break;
+        case 'delete':
+          fetch(address, { method: method })
+            .then((arg) => results.html('<pre>' + JSON.stringify(arg, undefined, 2) + '</pre>'));
+          break;
+        default:
+          const data = $("#json").val();
+          const headers = {
+            accept: 'application/json',
+            'content-type': 'application/json'
+          };
+          fetch(address,
+            {
+              method: method,
+              mode: 'cors',
+              headers: headers,
+              body: data
+            }).then((response) => {
+              return response.json();
+            }).then(arg => {
+              results.html('<pre>' + JSON.stringify(arg, undefined, 2) + '</pre>');
+            }).catch(err => {
+              results.html('<pre>' + JSON.stringify(err, undefined, 2) + '</pre>'); 
+            });
+          break;
+      }
+    }
+
+
+
+  </script>
+</body>
+
+</html>

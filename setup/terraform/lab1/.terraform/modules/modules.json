@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"gce-container","Source":"registry.terraform.io/terraform-google-modules/container-vm/google","Version":"3.1.0","Dir":".terraform/modules/gce-container"}]}

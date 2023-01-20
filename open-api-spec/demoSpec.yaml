@@ -1,0 +1,160 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Show Me Now API
+  description: An open API spec for Show Me Now
+
+# Server Configuration
+servers:
+  - url: https://api.roiapigee.net/show-me-now/v0
+  
+# Define the key name and location
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: apikey
+
+#  Apply the API key globally to all operations
+security:
+     - apiKey: []
+
+paths:
+# Customers
+  /customers:
+    get:
+      description: Returns a list of customers
+      parameters:
+        - in: query
+          name: email
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully returned a list of customers
+          content:
+            application/json: 
+             schema:
+                type: object
+                properties:
+                  apiStatus:
+                    type: string
+                  msg:
+                    type: string
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                          FirstName:
+                              type: string
+                          LastName:
+                              type: string
+                          Email:
+                              type: string
+                          Country:
+                              type: string
+                          PostalCode:
+                              type : string
+                          Address2:
+                              type : string
+                          StreetAddress:
+                              type : string
+
+        '401':   
+           description: Did you provide an API Key?   
+
+
+    post:
+       description: Add Customer
+       requestBody:
+         required: true
+         content:
+          application/json:
+            schema:
+              type: object 
+              required:
+                - email
+                - FirstName
+                - LastName
+              properties:
+                FirstName:
+                  type: string
+                LastName:
+                  type: string
+                StreetAddress:
+                  type: string
+                Address2:
+                  type: string
+                Postcode:
+                  type: string
+                StateOrProvince:
+                  type: string
+                Country:
+                  type: string
+                Email:
+                  type: string
+
+
+       responses:
+        '200':
+          description: Successfully added customer 
+
+
+#  Suppliers 
+  /suppliers:
+    get:
+      description: Returns a list of suppliers
+      parameters:
+        - in: query
+          name: id
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully returned a list of suppliers
+          content:
+            application/json: 
+             schema:
+                type: object
+                properties:
+                  apiStatus:
+                    type: string
+                  msg:
+                    type: string
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                          id:
+                              type: string
+                          Customers:
+                              type: array
+                              items:
+                                type: string
+                          Address:
+                              type: object
+                          Info:
+                              type: string
+
+        '401':   
+           description: Did you provide an API Key?   
+
+#  Shipments
+  /shipments:
+    get:
+      description: Returns a list of suppliers
+      parameters:
+        - in: query
+          name: id
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully returned a list of suppliers
+            
