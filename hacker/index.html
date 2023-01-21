@@ -21,15 +21,21 @@
         <option value="get">get</option>
         <option value="post">post</option>
         <option value="put">put</option>
-        <option value="patch">patch</option>
+        <option value="PATCH">patch</option>
         <option value="delete">delete</option>
       </select>
     </div>
     <h2>Endpoint address</h2>
     <div class="item">
       <div class="name-item">
-        <input type="text" name="address" size="80" id="address" value="http://localhost:8080/v1/customers?email=acelle1t@boston.com"
-          placeholder="http..." />
+        <input type="text" name="address" size="80" id="address"
+          value="http://localhost:8080/v1/customers?email=acelle1t@boston.com" placeholder="http..." />
+      </div>
+    </div>
+    <h2>API key</h2>
+    <div class="item">
+      <div class="name-item">
+        <input type="text" name="key" size="80" id="key" value="" placeholder="api key e.g. giJbIK8n6Udq6...." />
       </div>
     </div>
     <h2>JSON payload (optional)</h2>
@@ -40,31 +46,46 @@
     <div class="btn-block">
       <button type="button" onclick="send()">Send</button>
     </div>
+    <h2>Return from API</h2>
     <div>
       <br>
-      <div id="results"></div>
+      <div class="item">
+        <textarea cols="70" rows="10" name="results" id="results"></textarea>
+      </div>
     </div>
   </form>
   <script>
     function send() {
+      let headers;
       const address = $('#address').val();
       const results = $('#results');
       const method = $('#method').val();
+      const key = $("#key").val();
       switch (method) {
         case 'get':
-          $.getJSON(address, (data) => {
-            results.html('<pre>' + JSON.stringify(data, undefined, 2) + '</pre>');
-          });
-          break;
         case 'delete':
-          fetch(address, { method: method })
-            .then((arg) => results.html('<pre>' + JSON.stringify(arg, undefined, 2) + '</pre>'));
-          break;
+          headers = {
+            accept: 'application/json',
+            apikey: key
+          };
+          fetch(address, {
+            method: method,
+            mode: 'cors',
+            headers: headers,
+          })
+            .then((response) => {
+              return response.json();
+            }).then(arg => {
+              results.html(JSON.stringify(arg, undefined, 2));
+            }).catch(err => {
+              results.html(JSON.stringify(err, undefined, 2));
+            }); break;
         default:
           const data = $("#json").val();
-          const headers = {
+          headers = {
             accept: 'application/json',
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            apikey: key
           };
           fetch(address,
             {
@@ -75,9 +96,9 @@
             }).then((response) => {
               return response.json();
             }).then(arg => {
-              results.html('<pre>' + JSON.stringify(arg, undefined, 2) + '</pre>');
+              results.html(JSON.stringify(arg, undefined, 2));
             }).catch(err => {
-              results.html('<pre>' + JSON.stringify(err, undefined, 2) + '</pre>'); 
+              results.html(JSON.stringify(err, undefined, 2));
             });
           break;
       }
