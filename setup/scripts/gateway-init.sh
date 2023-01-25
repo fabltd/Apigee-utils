@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo -e "Installing NGIX Gateway"
 # Set zone of legacy VM
 export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
