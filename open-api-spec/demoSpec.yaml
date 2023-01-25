@@ -6,7 +6,7 @@ info:
 
 # Server Configuration
 servers:
-  - url: https://api.roiapigee.net/show-me-now/v0
+  - url: https://34.107.155.147.nip.io/show-me-now/v0/customers
   
 # Define the key name and location
 components:

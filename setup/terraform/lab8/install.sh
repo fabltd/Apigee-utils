@@ -51,9 +51,6 @@ do
             echo -e "Install packages"
             gcloud compute ssh vs-code-server --command ~/vs-code-startup.sh
 
-            #Setup PortForward
-            echo -e "Setup SSH Tunnel"
-            gcloud compute ssh vs-code-server  -- -NL 8080:localhost:8080
         break
 
     else
