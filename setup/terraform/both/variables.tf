@@ -15,7 +15,7 @@ variable "zone" {
 
 variable "container_name" {
     type = string
-    default = "krattan/legacy-api-demo:v4"
+    default = "krattan/legacy-api-demo:v5"
 }
 
 
