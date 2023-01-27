@@ -37,7 +37,7 @@ do
         then
         echo "Installing VS-Code"
             #Change DIR
-            cd ~/Apigee-utils/setup/terraform/lab8/scripts
+            cd ~/Apigee-utils/setup/scripts/
 
             #Copy the install script
             echo -e "Add setup tools"
@@ -45,7 +45,7 @@ do
 
             #Copy the default config
             echo -e "Copy default config"
-            gcloud compute scp ./config.yaml vs-code-server:~/
+            gcloud compute scp ./config/code-sever-config.yaml vs-code-server:~/config.yaml
 
             # Run Install
             echo -e "Install packages"

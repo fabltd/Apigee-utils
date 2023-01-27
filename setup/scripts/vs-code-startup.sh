@@ -37,7 +37,7 @@ mkdir ~/.config/
 mkdir ~/.config/code-server
 
 #Add default config - password: letmein
-cp config.yaml ~/.config/code-server/config.yaml
+cp ./config.yaml ~/.config/code-server/config.yaml
 
 # Enable VS Code Service
 sudo systemctl enable --now code-server@$USER
