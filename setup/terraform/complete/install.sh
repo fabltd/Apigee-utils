@@ -31,7 +31,7 @@ done
 # Loop to makes SSH Call to VM and checks OS is unbuntu
 while :
 do
-    export ID=$(gcloud compute ssh vs-code-server --command "cat /etc/os-release" | grep -w 'ID')
+    export ID=$(gcloud compute ssh gateway --command "cat /etc/os-release" | grep -w 'ID')
 
     if [ "$ID" == "ID=ubuntu" ]
         then
@@ -40,7 +40,7 @@ do
             cd ~/Apigee-utils/setup/scripts/
 
             #Run the init script
-            ./gateway-init.sh
+            ./gateway-startup.sh
 
             # Setup FireBase
             cd ~/Apigee-utils/setup/data/
@@ -48,6 +48,15 @@ do
 
             echo "Setup test data"
             npm start
+
+            # Remove Public IP from Legacy
+            gcloud compute instances delete-access-config legacy-api
+
+            # Create TLS
+
+            # Test TLS - Adds Firewall 
+
+
 
         break
 

@@ -45,8 +45,8 @@ do
 
             #Copy the default config
             echo -e "Copy default config"
-            gcloud compute scp ./config/code-sever-config.yaml vs-code-server:~/config.yaml
-
+            gcloud compute scp ./config/code-server-config.yaml vs-code-server:~/config.yaml
+            
             # Run Install
             echo -e "Install packages"
             gcloud compute ssh vs-code-server --command ~/vs-code-startup.sh
