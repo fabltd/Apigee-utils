@@ -18,11 +18,11 @@
     <h2>Method</h2>
     <div>
       <select name="method" id="method">
-        <option value="get">get</option>
-        <option value="post">post</option>
-        <option value="put">put</option>
+        <option value="GET">get</option>
+        <option value="POST">post</option>
+        <option value="PUT">put</option>
         <option value="PATCH">patch</option>
-        <option value="delete">delete</option>
+        <option value="DELETE">delete</option>
       </select>
     </div>
     <h2>Endpoint address</h2>
@@ -35,14 +35,14 @@
     <h2>API key</h2>
     <div class="item">
       <div class="name-item">
-        <input type="text" name="key" size="80" id="key" value="" placeholder="api key e.g. giJbIK8n6Udq6...." />
+        <input type="text" name="key" size="80" id="key" value=""
+          placeholder="api key e.g. giJbIK8n6Udq6...." />
       </div>
     </div>
     <h2>JSON payload (optional)</h2>
     <div class="item">
       <textarea cols="70" rows="10" name="json" id="json"></textarea>
     </div>
-
     <div class="btn-block">
       <button type="button" onclick="send()">Send</button>
     </div>
@@ -54,58 +54,103 @@
       </div>
     </div>
   </form>
+  <div id="target"></div>
   <script>
-    function send() {
-      let headers;
-      const address = $('#address').val();
-      const results = $('#results');
-      const method = $('#method').val();
-      const key = $("#key").val();
-      switch (method) {
-        case 'get':
-        case 'delete':
-          headers = {
-            accept: 'application/json',
-            apikey: key
-          };
-          fetch(address, {
+
+    function fetchIt(address, method, headers, data, results) {
+      if (data) {
+        return fetch(address,
+          {
             method: method,
             mode: 'cors',
             headers: headers,
-          })
-            .then((response) => {
-              return response.json();
-            }).then(arg => {
-              results.html(JSON.stringify(arg, undefined, 2));
-            }).catch(err => {
-              results.html(JSON.stringify(err, undefined, 2));
-            }); break;
-        default:
-          const data = $("#json").val();
-          headers = {
-            accept: 'application/json',
-            'content-type': 'application/json',
-            apikey: key
-          };
-          fetch(address,
-            {
-              method: method,
-              mode: 'cors',
-              headers: headers,
-              body: data
-            }).then((response) => {
-              return response.json();
-            }).then(arg => {
-              results.html(JSON.stringify(arg, undefined, 2));
-            }).catch(err => {
-              results.html(JSON.stringify(err, undefined, 2));
-            });
-          break;
+            body: data
+          });
+      }
+      else {
+        return fetch(address, {
+          method: method,
+          mode: 'cors',
+          headers: headers,
+        });
       }
     }
 
+    function send() {
+      let headers;
+      const method = $('#method').val();
+      const address = $('#address').val();
+      const results = $('#results');
+      const key = $("#key").val();
+      const data = $("#json").val();
+      if (urlp['sitekey']) {
+        grecaptcha.enterprise.ready(function () {
+          grecaptcha.enterprise.execute(urlp['sitekey']).then(function (token) {
+            switch (method) {
+              case 'GET':
+              case 'DELETE':
+                headers = {
+                  accept: 'application/json',
+                  apikey: key,
+                  'x-recaptcha-key': urlp['sitekey'],
+                  'x-recaptcha-token': token
+                };
+                break;
+              default:
+                headers = {
+                  accept: 'application/json',
+                  'content-type': 'application/json',
+                  apikey: key,
+                  'x-recaptcha-key': urlp['sitekey'],
+                  'x-recaptcha-token': token
+                };
+                break;
+            }
+            fetchIt(address, method, headers, data, results).then((response) => {
+              return response.json();
+            }).then(arg => {
+              results.html(JSON.stringify(arg, undefined, 2));
+            }).catch(err => {
+              results.html(JSON.stringify(err, undefined, 2));
+            })
+          });
+        });
+      }
+      else {
+        switch (method) {
+          case 'GET':
+          case 'DELETE':
+            headers = {
+              accept: 'application/json',
+              apikey: key
+            };
+            break;
+          default:
+            const data = $("#json").val();
+            headers = {
+              accept: 'application/json',
+              'content-type': 'application/json',
+              apikey: key
+            };
+            break;
+        }
+        fetchIt(address, method, headers, data, results).then((response) => {
+          return response.json();
+        }).then(arg => {
+          results.html(JSON.stringify(arg, undefined, 2));
+        }).catch(err => {
+          results.html(JSON.stringify(err, undefined, 2));
+        });
+      }
 
+    }
 
+    const urlp = []; s = location.toString().split('?'); s = s[1].split('&'); for (i = 0; i < s.length; i++) { u = s[i].split('='); urlp[u[0]] = u[1]; }
+    let newScript = document.createElement("script");
+    if (urlp['sitekey']) {
+      newScript.src = "https://www.google.com/recaptcha/enterprise.js?render=" + urlp['sitekey'];
+      document.getElementById('target').appendChild(newScript);
+    }
   </script>
 </body>
 
