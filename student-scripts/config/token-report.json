@@ -1,0 +1,17 @@
+{
+	"name": "my-token-validity-report",
+	"displayName": "my-token-validity-report",
+	"metrics": [{
+		"name": "message_count",
+		"function": "sum"
+	}],
+	"dimensions": [
+		"dc_tokenValidity",
+		"apiproxy",
+		"proxy_basepath",
+		"proxy_pathsuffix",
+		"client_id",
+		"x_forwarded_for_ip"
+	],
+	"chartType": "column"
+}

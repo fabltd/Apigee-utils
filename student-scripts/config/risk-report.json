@@ -1,0 +1,23 @@
+{
+	"name": "my-riskscore-report",
+	"displayName": "my-riskscore-report",
+	"metrics": [{
+			"name": "dc_riskScore",
+			"function": "avg"
+		},
+		{
+			"name": "dc_riskScore",
+			"function": "min"
+		},
+		{
+			"name": "dc_riskScore",
+			"function": "max"
+		},
+		{
+			"name": "message_count",
+			"function": "sum"
+		}
+	],
+	"dimensions": ["apiproxy", "proxy_basepath", "proxy_pathsuffix"],
+	"chartType": "column"
+}

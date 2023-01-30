@@ -14,5 +14,5 @@ export ENV=eval
     -X POST \
     -H "Authorization: Bearer $TOKEN" \
     -H "application/octet-stream" \
-    -F 'data=@../lab-catchup/start-lab-7/sf-reCapture/sf-reCapture-lab7.zip'
+    -F 'data=@../lab-catchup/start-lab-8/sf-reCapture/sf-reCapture-lab8.zip'
          
