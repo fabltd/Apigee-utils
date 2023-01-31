@@ -6,7 +6,7 @@ export TOKEN=$(gcloud auth print-access-token)
 #Set Enviroment Vars
 export ORG=$GOOGLE_CLOUD_PROJECT
 #Apigee Enviroment
-export ENV=eval
+export ENV_GROUP=eval-group
 
 # Get Source Code
 cd ~
@@ -31,7 +31,7 @@ echo -e "Updating Apigee Host: $HOST \n"
 
 #Set Base URL
 sed -i "/url:/c\url: ," ./base-config.conf
-sed -i 's~url:~url:\x27http://'$HOST'/show-me-now/v0/\x27~g' ./base-config.conf
+sed -i 's~url:~url:\x27https://'$HOST'/show-me-now/v0/\x27~g' ./base-config.conf
 
 #Request Recapture Token from user
 #echo "Paste you recapture site key for show-me-now-real:"
