@@ -38,7 +38,7 @@ curl -s "https://apigee.googleapis.com/v1/organizations/"$ORG"/reports" \
     -d @./config/risk-report.json
 
 echo "Provisiong update shared-flow" 
-  curl "https://apigee.googleapis.com/v1/organizations/$ORG/sharedflows?action=import&name=reCaptureV1-DC" \
+  curl "https://apigee.googleapis.com/v1/organizations/$ORG/sharedflows?action=import&name=reCaptureV1" \
     -X POST \
     -H "Authorization: Bearer $TOKEN" \
     -H "application/octet-stream" \
