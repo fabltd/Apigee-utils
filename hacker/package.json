@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lite": "lite-server",
+    "lite": "lite-server -c bs-config.json",
     "start": "npm run lite",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

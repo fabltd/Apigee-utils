@@ -20,5 +20,5 @@ echo "Updating Apigee Host: $HOST"
 sed -i 's~http://localhost:8080/v1/~https://'$HOST'/show-me-now/v0/~g' index.html
 
 #Start server
-npm install
+npm install --silent
 npm start
