@@ -1,3 +1,4 @@
+
 locals {
   instance_name = "legacy-api"
 }
@@ -47,7 +48,8 @@ module "gce-container" {
 
 resource "google_compute_instance" "legacy-api" {
   name         = local.instance_name
-  machine_type = "e2-micro"
+  machine_type = "e2-small"
+  zone         = var.zone
 
   boot_disk {
     initialize_params {
@@ -56,17 +58,17 @@ resource "google_compute_instance" "legacy-api" {
   }
 
   service_account {
-    email  = google_service_account.default.email
+    email  = google_service_account.legacyapi.email
     scopes = ["cloud-platform"]
   }
 
   network_interface {
-    network = "default"
+    subnetwork = google_compute_subnetwork.mhc-subnet.name
     access_config {
     }
   }
 
-  tags = ["http-server", "container-vm-example"]
+  tags = ["allow-api-http"] 
 
   metadata = {
     gce-container-declaration = module.gce-container.metadata_value
@@ -77,7 +79,5 @@ resource "google_compute_instance" "legacy-api" {
   labels = {
     container-vm = module.gce-container.vm_container_label
   }
-
-#   metadata_startup_script = "docker run krattan/${var.container_name}"
 
 }

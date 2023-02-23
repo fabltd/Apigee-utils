@@ -1,4 +1,5 @@
-resource "google_compute_instance" "gateway" {
+
+resource "google_compute_instance" "gateway_vm" {
   name         = "gateway"
   machine_type = "e2-small"
   zone         = var.zone
@@ -10,16 +11,17 @@ resource "google_compute_instance" "gateway" {
   }
 
   service_account {
-    email  = google_service_account.default.email
+    email  = google_service_account.gateway.email
     scopes = ["cloud-platform"]
   }
 
   network_interface {
-    network = "default"
+    network = "mhc-network"
+    subnetwork = "mhc-subnetwork"
     access_config {
     }
   }
 
-  tags = ["http-server"]
+  tags = ["allow-api-http"] 
 
 }

@@ -12,3 +12,10 @@ variable "zone" {
   type    = string
   default = "us-east1-b"
 }
+
+variable "container_name" {
+    type = string
+    default = "krattan/legacy-api-demo:v5"
+}
+
+
