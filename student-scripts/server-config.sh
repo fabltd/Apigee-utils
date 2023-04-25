@@ -1,10 +1,10 @@
 #!/bin/bash
 
-echo -e "Setting compute engine zone"
+#echo -e "Setting compute engine zone"
 # Set zone of gateway VM
-export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
-gcloud config set compute/zone $COMPUTE_ZONE
-echo -e "\n"
+#export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
+#gcloud config set compute/zone $COMPUTE_ZONE
+#echo -e "\n"
 
 cd ~/Apigee-utils/student-scripts
 

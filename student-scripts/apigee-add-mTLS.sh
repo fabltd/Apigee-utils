@@ -7,7 +7,7 @@ export TOKEN=$(gcloud auth print-access-token)
 ORG=$GOOGLE_CLOUD_PROJECT
 
 #Apigee Enviroment
-ENV=eval
+ENV=test-env
 
 # Add KeyStore
  curl "https://apigee.googleapis.com/v1/organizations/$ORG/environments/$ENV/keystores" \

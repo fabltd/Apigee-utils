@@ -8,7 +8,7 @@ export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
 gcloud config set compute/zone $COMPUTE_ZONE
 
 # Provison VM with TerraForm
-cd ~/Apigee-utils/setup/install/lab1/terraform
+cd ~/Apigee-utils/setup/install/init/lab1-init/
 terraform init 
 terraform apply -auto-approve -var="project_id=$GOOGLE_CLOUD_PROJECT"
 
@@ -26,11 +26,3 @@ do
         echo "VM Not Ready - state: $STATUS"
     fi
 done
-
-
-# Install Dataset
-cd ~/Apigee-utils/setup/data/
-npm install
-
-echo "Setup test data"
-npm start

@@ -1,14 +1,16 @@
 #!/bin/bash
 
 # Test set zone
-gcloud config set compute/zone us-east1-b
+gcloud config set compute/zone us-central1-a
+
+echo "Zone = us-central1-a"
 
 #Set zone
 export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
 gcloud config set compute/zone $COMPUTE_ZONE
 
 # Provison VM with TerraForm
-cd ~/Apigee-utils/setup/install/complete/terraform
+cd ~/Apigee-utils/setup/install/init/lab1-part3
 terraform init 
 terraform apply -auto-approve -var="project_id=$GOOGLE_CLOUD_PROJECT"
 
@@ -42,27 +44,8 @@ do
             #Run the init script
             ./gateway-startup.sh
 
-            # Setup FireBase
-            cd ~/Apigee-utils/setup/data/
-            npm install
-
-            echo "Setup test data"
-            npm start
-
-            # Remove Public IP from Legacy
-            gcloud compute instances delete-access-config legacy-api
-
-            # Create TLS Certs
-            cd ~/Apigee-utils/student-scripts
-            ./certs.sh
-
-            # ADD mTLS - Adds Firewall 
-            ./server-config.sh
-
-            # Test mLTS 
-            ./mTLS-test.sh
-
-
+            # Remove Public IP from Legacy 
+             gcloud compute instances delete-access-config legacy-api
 
         break
 
