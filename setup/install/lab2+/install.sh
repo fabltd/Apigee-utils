@@ -110,13 +110,18 @@ echo "Updating proxy with gateway IP"
 
 # Install XML Editor
 sudo apt-get install xmlstarlet
+
 # Extract API Proxy
+cd ~/Apigee-utils/setup/install/lab2+
 unzip -o SMN-base.zip
+
 # Get gateway IP Address
 GWIP=$(gcloud compute instances describe gateway --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
 echo -e "Gateway IP:" $GWIP
+
 # Edit proxy - updating target IP
 xmlstarlet ed --update 'TargetEndpoint/HTTPTargetConnection/URL' --value 'https://'$GWIP'/v1/{dynamic_path}' ./apiproxy/targets/default.xml
+
 # Rezip Proxy
 zip -r -o SMN-base.zip apiproxy
 
@@ -133,3 +138,5 @@ echo "Deploying proxy: $APINAME to Enviroment $ENV"
 curl "https://apigee.googleapis.com/v1/organizations/$ORG/environments/$ENV/apis/$APINAME/revisions/1/deployments?override=true" \
   -X POST \
   -H "Authorization: Bearer $TOKEN"
+
+echo "Done - Return to Apigee"
