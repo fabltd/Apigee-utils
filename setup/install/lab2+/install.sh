@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Test set zone
-gcloud config set compute/zone us-east1-b
+# Set zone
+gcloud config set compute/zone us-central1-a
 
 #Set zone
 export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
 gcloud config set compute/zone $COMPUTE_ZONE
 
 # Provison VM with TerraForm
-cd ~/Apigee-utils/setup/install/init/lab2+
-terraform apply -auto-approve -var="project_id=$GOOGLE_CLOUD_PROJECT"
+#cd ~/Apigee-utils/setup/install/init/lab2+
+#terraform apply -auto-approve -var="project_id=$GOOGLE_CLOUD_PROJECT"
 
 # Loop to wait for VM to enter the RUNNING status
 while :
@@ -69,3 +69,52 @@ do
         echo "Waiting..."
     fi
 done
+
+#Generate Access Token
+export TOKEN=$(gcloud auth print-access-token)
+
+#Set Enviroment Vars
+export ORG=$GOOGLE_CLOUD_PROJECT
+
+#Apigee Enviroment
+export ENV=eval
+
+#API Name
+export APINAME=SMN-Labs
+
+echo "Installing TLS certificates to Apigee enviroment: $ENV"
+
+# Add KeyStore
+ curl "https://apigee.googleapis.com/v1/organizations/$ORG/environments/$ENV/keystores" \
+    -X POST \
+    -H "Authorization: Bearer $TOKEN" \
+    -H "content-type:application/json" \
+    -d '{"name":"'"gateway"'" }' 
+
+# Add mTLS Client Key & Cert
+curl "https://apigee.googleapis.com/v1/organizations/$ORG/environments/$ENV/keystores/gateway/aliases?alias=mtls-alias&format=keycertfile" \
+    -X POST \
+    -H "Authorization: Bearer $TOKEN" \
+    -H "content-type:multipart/form-data" \
+    -F keyFile="@../mTLS/apigee/apigee.key" \
+    -F certFile="@../mTLS/apigee/apigee.crt" 
+   
+curl "https://apigee.googleapis.com/v1/organizations/$ORG/environments/$ENV/keystores/gateway/aliases?alias=mtls-ca&format=keycertfile" \
+-X POST \
+-H "Authorization: Bearer $TOKEN" \
+-H "content-type:multipart/form-data" \
+-F certFile="@../mTLS/ca/ca.crt" 
+
+echo "Installing proxy: $APINAME"
+
+curl "https://apigee.googleapis.com/v1/organizations/$ORG/apis?action=import&name=$APINAME" \
+-X POST \
+-H "Authorization: Bearer $TOKEN" \
+-H "application/octet-stream" \
+-F 'data=@./SMN-base.zip'
+
+echo "Deploying proxy: $APINAME to Enviroment $ENV"
+
+curl "https://apigee.googleapis.com/v1/organizations/$ORG/environments/$ENV/apis/$APINAME/revisions/1/deployments?override=true" \
+  -X POST \
+  -H "Authorization: Bearer $TOKEN"
