@@ -120,7 +120,7 @@ GWIP=$(gcloud compute instances describe gateway --format='get(networkInterfaces
 echo -e "Gateway IP:" $GWIP
 
 # Edit proxy - updating target IP
-xmlstarlet ed --update 'TargetEndpoint/HTTPTargetConnection/URL' --value 'https://'$GWIP'/v1/{dynamic_path}' ./apiproxy/targets/default.xml
+xmlstarlet ed --inplace -u 'TargetEndpoint/HTTPTargetConnection/URL' --value 'https://'$GWIP'/v1/{dynamic_path}' ./apiproxy/targets/default.xml 
 
 # Rezip Proxy
 zip -r -o SMN-base.zip apiproxy
