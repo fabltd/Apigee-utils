@@ -30,9 +30,12 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 sudo usermod -a -G docker ${USER}
 
 #Install VS Code Server
-curl -fsSL https://code-server.dev/install.sh | sh
+wget https://code-server.dev/install.sh
+chmod +x install.sh
+./install.sh  --version 4.1.0 
 
 #Add config dir
+rm -rf ~/.config/
 mkdir ~/.config/
 mkdir ~/.config/code-server
 

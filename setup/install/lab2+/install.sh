@@ -77,7 +77,7 @@ export TOKEN=$(gcloud auth print-access-token)
 export ORG=$GOOGLE_CLOUD_PROJECT
 
 #Apigee Enviroment
-export ENV=eval
+export ENV=test-env
 
 #API Name
 export APINAME=SMN-Labs
@@ -138,5 +138,34 @@ echo "Deploying proxy: $APINAME to Enviroment $ENV"
 curl "https://apigee.googleapis.com/v1/organizations/$ORG/environments/$ENV/apis/$APINAME/revisions/1/deployments?override=true" \
   -X POST \
   -H "Authorization: Bearer $TOKEN"
+
+echo "Creating API product"
+
+curl "https://apigee.googleapis.com/v1/organizations/$ORG/apiproducts" \
+  -X POST \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "content-type:application/json" \
+  -d @./config/api-product.json
+
+echo "Creating Developer"
+
+curl "https://apigee.googleapis.com/v1/organizations/$ORG/developers/" \
+  -X POST \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "content-type:application/json" \
+  -d '{
+  "email": "abischof1d@google.com",
+  "firstName": "Anastasia",
+  "lastName": "Bischof",
+  "userName": "ab1d"
+ }'
+
+echo "Creating API APP"
+curl "https://apigee.googleapis.com/v1/organizations/$ORG/developers/abischof1d@google.com/apps" \
+  -X POST \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "content-type:application/json" \
+  -d @./config/api-app.json
+
 
 echo "Done - Return to Apigee"
