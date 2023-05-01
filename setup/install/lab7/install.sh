@@ -49,7 +49,7 @@ do
             
             # Run Install
             echo -e "Install packages"
-            gcloud compute ssh vs-code-server --command ~/vs-code-startup.sh
+            gcloud compute ssh vs-code-server --command './vs-code-startup.sh'
 
         break
 

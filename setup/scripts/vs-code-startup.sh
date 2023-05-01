@@ -24,7 +24,7 @@ echo \
 sudo apt-get update
 
 #Install Docker
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 #Enable docker for current user
 sudo usermod -a -G docker ${USER}
