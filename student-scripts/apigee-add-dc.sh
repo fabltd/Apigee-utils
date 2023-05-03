@@ -42,5 +42,5 @@ echo "Provisiong update shared-flow"
     -X POST \
     -H "Authorization: Bearer $TOKEN" \
     -H "application/octet-stream" \
-    -F 'data=@../setup/install/lab8/sf-reCapture/sf-reCapture-data-collector.zi'
+    -F 'data=@../setup/install/lab6/sf-reCapture/sf-reCapture-data-collector.zip'
          
