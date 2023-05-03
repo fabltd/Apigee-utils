@@ -24,7 +24,7 @@ cp ~/Apigee-utils/student-scripts/config/base-config.conf .
 HOST=$(curl -s "https://apigee.googleapis.com/v1/organizations/$ORG/envgroups/$ENV_GROUP" \
     -X GET \
     -H "Authorization: Bearer $TOKEN" \
-    | jq  -r ".hostnames[1]"
+    | jq  -r ".hostnames[0]"
      )
   
 echo -e "Updating Apigee Host: $HOST \n" 
