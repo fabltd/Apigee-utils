@@ -6,7 +6,7 @@ export TOKEN=$(gcloud auth print-access-token)
 #Set Enviroment Vars
 export ORG=$GOOGLE_CLOUD_PROJECT
 #Apigee Enviroment
-export ENV_GROUP=eval-group
+export ENV_GROUP=test-env-group
 
 # Get Source Code
 cd ~
