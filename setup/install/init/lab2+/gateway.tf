@@ -6,7 +6,7 @@ resource "google_compute_instance" "gateway_vm" {
 
   boot_disk {
     initialize_params {
-      image = "ubuntu-1804-lts"
+      image = "projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20230616"
     }
   }
 
