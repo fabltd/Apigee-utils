@@ -1,0 +1,36 @@
+{
+    "name": "show-me-now",
+    "displayName": "Show Me Now",
+    "approvalType": "auto",
+    "attributes": [
+      {
+        "name": "access",
+        "value": "public"
+      }
+    ],
+    "description": "Show Me Now Full API Access",
+    "environments": [
+      "test-env"
+    ],
+    "operationGroup": {
+      "operationConfigs": [
+        {
+          "apiSource": "SMN-Labs",
+          "operations": [
+            {
+              "resource": "/**",
+              "methods": [
+                "DELETE",
+                "GET",
+                "PATCH",
+                "POST",
+                "PUT"
+              ]
+            }
+          ],
+          "quota": {}
+        }
+      ],
+      "operationConfigType": "proxy"
+    }
+  }

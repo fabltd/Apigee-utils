@@ -113,7 +113,7 @@ sudo apt-get install xmlstarlet
 
 # Extract API Proxy
 cd ~/Apigee-utils/setup/install/lab2+
-unzip -o SMN-base.zip
+unzip -o SMN-base-5.zip
 
 # Get gateway IP Address
 GWIP=$(gcloud compute instances describe gateway --format='get(networkInterfaces[0].accessConfigs[0].natIP)')
@@ -123,7 +123,7 @@ echo -e "Gateway IP:" $GWIP
 xmlstarlet ed --inplace -u 'TargetEndpoint/HTTPTargetConnection/URL' --value 'https://'$GWIP'/v1/{dynamic_path}' ./apiproxy/targets/default.xml 
 
 # Rezip Proxy
-zip -r -o SMN-base.zip apiproxy
+zip -r -o SMN-base-5.zip apiproxy
 
 echo "Installing proxy: $APINAME"
 
@@ -131,7 +131,7 @@ curl "https://apigee.googleapis.com/v1/organizations/$ORG/apis?action=import&nam
 -X POST \
 -H "Authorization: Bearer $TOKEN" \
 -H "application/octet-stream" \
--F 'data=@./SMN-base.zip'
+-F 'data=@./SMN-base-5.zip'
 
 echo "Deploying proxy: $APINAME to Enviroment $ENV"
 

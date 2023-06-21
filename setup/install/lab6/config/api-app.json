@@ -1,0 +1,17 @@
+{
+    "apiProducts": [
+            "show-me-now"    
+    ],
+    
+    "attributes": [
+        {
+            "name": "DisplayName",
+            "value": "show-me-now"
+        }
+    ],
+   
+    "name": "show-me-now",
+    "scopes" : [],
+    "status": "approved"
+   
+}
