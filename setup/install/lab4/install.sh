@@ -112,7 +112,7 @@ echo "Updating proxy with gateway IP"
 sudo apt-get install xmlstarlet
 
 # Extract API Proxy
-cd ~/Apigee-utils/setup/install/lab2+
+cd ~/Apigee-utils/setup/install/lab4
 unzip -o SMN-base-4.zip
 
 # Get gateway IP Address
