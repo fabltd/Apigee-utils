@@ -138,7 +138,7 @@ curl "https://apigee.googleapis.com/v1/organizations/$ORG/apis?action=import&nam
 
 echo "Deploying proxy: $APINAME to Enviroment $ENV"
 
-curl "https://apigee.googleapis.com/v1/organizations/$ORG/environments/$ENV/apis/$APINAME/revisions/1/deployments?override=true?serviceAccount=$SA" \
+curl "https://apigee.googleapis.com/v1/organizations/$ORG/environments/$ENV/apis/$APINAME/revisions/1/deployments?override=true&serviceAccount=$SA" \
   -X POST \
   -H "Authorization: Bearer $TOKEN"
 
