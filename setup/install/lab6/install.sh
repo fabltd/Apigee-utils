@@ -82,6 +82,9 @@ export ENV=test-env
 #API Name
 export APINAME=SMN-Labs
 
+#Service Account 
+export SA=sa-apigee-google-services@$ORG.iam.gserviceaccount.com
+
 echo "Installing TLS certificates to Apigee enviroment: $ENV"
 
 # Add KeyStore
@@ -135,7 +138,7 @@ curl "https://apigee.googleapis.com/v1/organizations/$ORG/apis?action=import&nam
 
 echo "Deploying proxy: $APINAME to Enviroment $ENV"
 
-curl "https://apigee.googleapis.com/v1/organizations/$ORG/environments/$ENV/apis/$APINAME/revisions/1/deployments?override=true" \
+curl "https://apigee.googleapis.com/v1/organizations/$ORG/environments/$ENV/apis/$APINAME/revisions/1/deployments?override=true&serviceAccount=$SA" \
   -X POST \
   -H "Authorization: Bearer $TOKEN"
 
