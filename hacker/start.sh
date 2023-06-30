@@ -10,7 +10,7 @@ export ORG=$GOOGLE_CLOUD_PROJECT
 export ENV=eval
 
 # Get Apigee Host from Apigee
-HOST=$(curl -s "https://apigee.googleapis.com/v1/organizations/$ORG/envgroups/eval-group" \
+HOST=$(curl -s "https://apigee.googleapis.com/v1/organizations/$ORG/envgroups/test-env" \
     -X GET \
     -H "Authorization: Bearer $TOKEN" \
     | jq ".hostnames[1]" -r
