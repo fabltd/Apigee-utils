@@ -12,7 +12,7 @@ gcloud config set compute/zone $COMPUTE_ZONE
 # Provison VM with TerraForm
 cd ~/Apigee-utils/setup/install/init/lab1-part3
 terraform init 
-terraform apply -auto-approve -var="project_id=$GOOGLE_CLOUD_PROJECT"
+terraform apply -auto-approve -var="project_id=$GOOGLE_CLOUD_PROJECT" -var="region"=$(gcloud config get-value compute/region) -var="zone"=$(gcloud config get-value compute/zone)
 
 # Loop to wait for VM to enter the RUNNING status
 while :
