@@ -10,7 +10,7 @@ variable "region" {
 
 variable "zone" {
   type    = string
-  default = "us-east4-a"
+  default = "us-east4-c"
 }
 
 variable "container_name" {
