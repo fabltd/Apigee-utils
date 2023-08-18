@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Test set zone
-gcloud config set compute/zone us-east1-b
+#gcloud config set compute/zone us-east1-b
 
 #Set zone
 export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
