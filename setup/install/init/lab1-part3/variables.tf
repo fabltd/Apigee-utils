@@ -5,12 +5,10 @@ variable "project_id" {
 
 variable "region" {
   type    = string
-  default = "us-east4"
 }
 
 variable "zone" {
   type    = string
-  default = "us-east4-c"
 }
 
 variable "container_name" {
