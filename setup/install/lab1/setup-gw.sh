@@ -7,9 +7,11 @@
 
 #Set zone
 export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
-export COMPUTE_REGION=${COMPUTE_ZONE::-2}
-
 gcloud config set compute/zone $COMPUTE_ZONE
+
+#export COMPUTE_REGION=${COMPUTE_ZONE::-2}
+echo Please enter you compute region - Note this is NOT the Zone!?
+read COMPUTE_REGION
 gcloud config set compute/zone $COMPUTE_REGION
 
 # Provison VM with TerraForm
