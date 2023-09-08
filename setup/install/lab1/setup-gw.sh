@@ -7,7 +7,7 @@
 
 #Set zone
 export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
-export COMPUTE_REGION=${COMPUTE_ZONE::-3}
+export COMPUTE_REGION=${COMPUTE_ZONE::-2}
 
 gcloud config set compute/zone $COMPUTE_ZONE
 gcloud config set compute/zone $COMPUTE_REGION
