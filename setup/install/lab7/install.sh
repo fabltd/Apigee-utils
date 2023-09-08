@@ -7,6 +7,10 @@
 export COMPUTE_ZONE=$(gcloud config get-value compute/zone)
 gcloud config set compute/zone $COMPUTE_ZONE
 
+#Set Region from zone
+export COMPUTE_REGION=${COMPUTE_ZONE::-2}
+gcloud config set compute/region $COMPUTE_REGION
+
 # Provison VM with TerraForm
 cd ~/Apigee-utils/setup/install/lab7/terraform
 terraform init 
