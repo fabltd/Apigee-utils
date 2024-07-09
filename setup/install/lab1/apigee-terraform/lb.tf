@@ -5,7 +5,7 @@ resource "google_compute_instance_template" "mig_bridge_template" {
   tags = ["https-server", "mig-bridge"]
   // boot disk
   disk {
-    source_image = "centos-cloud/centos-7"
+    source_image = "centos-cloud/centos-stream-9"
     boot         = true
     disk_size_gb = 20
   }
